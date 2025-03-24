@@ -24,7 +24,7 @@ const convertToArr = (string) => {
 
 const getFlavorTotal = (orderList) => {
   const orderTotalsObj = {};
-  for (const key of orderList {
+  for (const key of orderList) {
     key in orderTotalsObj ? orderTotalsObj[key]++ : orderTotalsObj[key] = 1;
   }
   return orderTotalsObj;
@@ -60,7 +60,8 @@ const buildOrderTable = (orderTotal) =>{
   // add grandtotal
   const grandTotal = sumGrandTotal(orderTotal);
   table += '<tr>'
-  table += '<td colspan="2">' + "Total order:  " + grandTotal + '</td>';
+  table += '<td class="bg-warning">' + "Total order:  " + '</td>';
+  table += '<td class="bg-warning text-center">' + grandTotal + '</td>';
   table += '</tr>'
 
   return table
@@ -77,7 +78,7 @@ console.table(flavorArr);
 
 console.log("Customer Flavor Totals:");
 for (const flavor in orderObj) {
- console.log(`${flavor}: ${orderTotal[flavor]}` );
+ console.log(`${flavor}: ${orderObj[flavor]}` );
 }
 
 //build customer order table
