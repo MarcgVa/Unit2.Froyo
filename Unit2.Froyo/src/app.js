@@ -13,39 +13,72 @@
   }
 
 */
-let table = "";
+
 const userInputString = prompt("Enter the flavors you want in a comma separated list", "Vanilla,Vanilla,Vanilla,Chocolate,Strawberry,Coffee,Coffee");
 
-const flavorArr = userInputString.split(",");
-//console.log(flavorArr);
-
-
-const getFlavorTotal = (flavors) => {
-  const totalFlavors = {};
-  for (const flavor of flavors) {
-    flavor in totalFlavors ? totalFlavors[flavor]++ : totalFlavors[flavor] = 1;
-  }
-  return totalFlavors;
+const convertToArr = (string) => {
+  let newStr = string.replace(/\s/g,'')
+  const listArr = newStr.split(",");
+  return listArr;
 }
 
-const orderTotal = getFlavorTotal(flavorArr);
+const getFlavorTotal = (orderList) => {
+  const orderTotalsObj = {};
+  for (const key of orderList {
+    key in orderTotalsObj ? orderTotalsObj[key]++ : orderTotalsObj[key] = 1;
+  }
+  return orderTotalsObj;
+}
 
+//generate grandtotal of all flavors ordered by a customer
+const sumGrandTotal = (orderTotal) => {
+  let total = 0;
+  for (const key in orderTotal) {
+    total += orderTotal[key];
+  }
+  return total;
+}
+
+const buildOrderTable = (orderTotal) =>{
+  let table = "";
+  // Add header
+  table = '<thead>'
+  table +='<tr class="table-primary text-center">';
+  table +='<th scope="col">Flavor</th>';
+  table +='<th scope="col">Amount</th>';
+  table +='</tr>';
+  table +='</thead>';
+
+  // flavors and totals
+  for(let key in orderTotal){
+    table += '<tr class="table-secondary">';
+    table += '<td>' + key + '</td>';
+    table += '<td class="text-center">' + orderTotal[key] + '</td>';
+    table += '</tr>';
+  }
+
+  // add grandtotal
+  const grandTotal = sumGrandTotal(orderTotal);
+  table += '<tr>'
+  table += '<td colspan="2">' + "Total order:  " + grandTotal + '</td>';
+  table += '</tr>'
+
+  return table
+}
+
+
+const flavorArr = convertToArr(userInputString);
+const orderObj = getFlavorTotal(flavorArr);
+const dataTable = buildOrderTable(orderObj);
+
+//Logging to console per rubric
 console.log("Customer Order: ");
 console.table(flavorArr);
 
 console.log("Customer Flavor Totals:");
-
-for (const flavor in orderTotal) {
+for (const flavor in orderObj) {
  console.log(`${flavor}: ${orderTotal[flavor]}` );
 }
 
-table = '<tbody>';
-
-for(let key in orderTotal){
-  table += '<tr>';
-  table += '<td class="key">' + key + '</td>';
-  table += '<td>' + orderTotal[key] + '</td>';
-  table += '</tr>';
-}
-
-document.getElementById('tableData').innerHTML = table;
+//build customer order table
+document.getElementById('tableData').innerHTML = dataTable;
